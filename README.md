@@ -18,8 +18,7 @@ This application is a collaborative project made by Software Engineering student
 
 The technologies which will be used in developing this application are as follows:
 
-* [JavaScript](https://www.javascript.com/)
-* [React](https://www.reactjs.org/)
+* [Python3](https://python.com)
 * [HTML](https://html.com/)
 * [CSS](https://tailwindcss.com/)
 ### Mockups
