@@ -36,14 +36,16 @@ This project will reinforce Python programming skills and web development basics
 
 ---
 <table>
-  <th>Github</th>
+  <td>Github</td>
   
   <tr>
+    <td>
   <ul>
     <li>Omphile Gopane</li>
     <li>Pule Mathikha</li>
     <li>Mpho Mofokeng</li>
   </ul>
+    </td>
   </tr>
 
 </table>
