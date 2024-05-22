@@ -1,48 +1,32 @@
 # KNOW IT ALL
-A comprehensive and interactive quiz application project for a variety of students of all intellect levels
+# Guide for this Project Idea Bank
 
-## Table of contents
+A team without Back-End engineers.
+* Firebase as your backend.
+Please adhere to the tech stack
 
-* [Introduction](#introduction)
-* [Technologies](#technologies)
-  * [Mockups](#mockups)
-  * [Data Model](#data-model)
-  * [ER Diagram](#er-diagram)
-  * [Collaborators](#collaborators)
+# Interactive Quiz Application:
 
-## Introduction
+# Tech Stack:
+* Python (Flask/Django)
+* HTML
+* CSS
 
-This application is a collaborative project made by Software Engineering students at ALX_Africa specialized in Front-End Engineering
+# Description:
+Quiz application where users can answer multiple-choice questions.
+* Implement scoring.
+* time limits
+* feedback.
 
-## Technologies
+This project will reinforce Python programming skills and web development basics.
 
-The technologies which will be used in developing this application are as follows:
+# Milestones:
+* Auth system/Session management
+* Storage of quiz results under user accounts (This means you need to setup db storage for your application)
+* Make application responsive
+* Bonus: Design your code so that you’re able to add new sets of quiz questions
+* Bonus: Expose your quiz questions in the form of a REST API
 
-* [Python3](https://python.com)
-* [HTML](https://html.com/)
-* [CSS](https://tailwindcss.com/)
-### Mockups
+---
 
-**
-
-### Data Model
-
-- Helpful in understanding the workflow of Javascript application.
-- Demonstrates the data flow in the application.
-
-
-### ER Diagram
-
-[View ERD](https://www.lucidchart.com/invitations/accept/4959f428-f905-44ff-9a82-1cd55f6cf960)
-<br/>This entity-relationship diagram is a visual representation of the database design for the application.
-
-## Collaborators
-The collaborators of this project are:
-* [@Omphile_Gopane](https://github.com/TimotyGrey1005)
-* [@Pule_Makhitha]()
-* [@Mpho_Mofokeng]()
-
-## Thanksgiving
-
-We would like to express our gratitude to ALX_Africa for giving us a platform to showcase our skills in Frontend specialization, and growing our interests in the field with our final collaborative project. At the end of our journey as ALX students and programming prodigees, we believe this is a huge step to improving our skillsets on the learning curve.
-Special thanks to **ALL MEMBERS INVOLVED IN THE DEVELOPMENT OF THIS PROJECT**.
+[`Up`](#know-it-all)
