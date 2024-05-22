@@ -53,7 +53,6 @@ This project will reinforce Python programming skills and web development basics
         <li><a href="https://github.com/MphoCM">MphoCM</a></li>
       </ul>
     </td>
-    <th></th>
     <td>Collaborators</td>
   </tr>
 
