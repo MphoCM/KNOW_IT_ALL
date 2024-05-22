@@ -36,18 +36,24 @@ This project will reinforce Python programming skills and web development basics
 
 ---
 <table>
-  <tr><th>Github</th></tr>
+  <th>Github</th>
   
   <tr>
   <ul>
+    <li>Omphile Gopane</li>
     <li>Pule Mathikha</li>
-    <li></li>
-    <li></li>
+    <li>Mpho Mofokeng</li>
   </ul>
   </tr>
 
 </table>
 
+
+TheeKingZa Pule Mathikha
+@MphoCM
+MphoCM
+@TimothyGrey1005
+TimothyGrey1005 
 ---
 
 [`Up`](#know-it-all)
