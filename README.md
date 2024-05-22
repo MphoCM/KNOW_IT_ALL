@@ -35,5 +35,19 @@ This project will reinforce Python programming skills and web development basics
 * Bonus: Expose your quiz questions in the form of a REST API
 
 ---
+<table>
+  <tr><th>Github</th></tr>
+  
+  <tr>
+  <ul>
+    <li>Pule Mathikha</li>
+    <li></li>
+    <li></li>
+  </ul>
+  </tr>
+
+</table>
+
+---
 
 [`Up`](#know-it-all)
