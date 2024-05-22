@@ -36,15 +36,22 @@ This project will reinforce Python programming skills and web development basics
 
 ---
 <table>
-  <td>Github</td>
+  <th>Github</th> <th>usernames</th>
   
   <tr>
     <td>
   <ul>
-    <li>Omphile Gopane</li>
+    <li>Omphile Gopane</li> 
     <li>Pule Mathikha</li>
     <li>Mpho Mofokeng</li>
   </ul>
+    </td>
+    <td>
+      <ul>
+        <li><a href="https://github.com/TimothyGrey1005">TimothyGrey1005</a></li>
+        <li><a href="https://github.com/TheeKingZa">TheeKingZa</a></li>
+        <li><a href="https://github.com/MphoCM">MphoCM</a></li>
+      </ul>
     </td>
   </tr>
 
