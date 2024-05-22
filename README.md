@@ -36,7 +36,7 @@ This project will reinforce Python programming skills and web development basics
 
 ---
 <table>
-  <th>Github</th> <th>usernames</th>
+  <th>Github</th> <th>Usernames</th>
   
   <tr>
     <td>
@@ -53,16 +53,11 @@ This project will reinforce Python programming skills and web development basics
         <li><a href="https://github.com/MphoCM">MphoCM</a></li>
       </ul>
     </td>
+    <td>Collaborators</td>
   </tr>
 
 </table>
 
-
-TheeKingZa Pule Mathikha
-@MphoCM
-MphoCM
-@TimothyGrey1005
-TimothyGrey1005 
 ---
 
 [`Up`](#know-it-all)
