@@ -1,0 +1,21 @@
+/*
+ * Responsive Design:
+ *                  Use CSS media queries to ensure
+ *                  the application is responsive.
+ */
+ 
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+}
