@@ -8,9 +8,16 @@ Please adhere to the tech stack
 # Interactive Quiz Application:
 
 # Tech Stack:
-* Python (Flask/Django)
+* Python
+* Flask
 * HTML
 * CSS
+
+# Testing.
+* Unittest
+
+# Linter
+* pycodestyle
 
 # Description:
 Quiz application where users can answer multiple-choice questions.
