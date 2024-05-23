@@ -1,0 +1,33 @@
+<!-- profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/btns.css') }}">
+    <title>User Profile</title>
+</head>
+<body>
+
+    <nav>
+        <div>
+            <ul class="userlist">
+                <li class="btn-1"><a href="{{ url_for('home_page') }}">Return to Home</a></li>
+                <li class="btn-1"><a href="/logout">Logout</a></li></a> <!-- Logout button -->
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="userProfile intro">
+    <h1>USER PROFILE</h1>
+    <hr/>
+    <p><strong>USERNAME:</strong> {{ user.username }}</p>
+    <p><strong>FULL NAMEs:</strong> {{ user.name }} {{ user.surname }}</p>
+    <p><strong>AGE:</strong> {{ user.age }}</p>
+    <p><strong>GENDER:</strong> {{ user.gender }}</p>
+    <p><strong>E-MAIL:</strong> {{ user.email }}</p>
+    <!-- Add more user information as needed -->
+    </div>
+</body>
+</html>

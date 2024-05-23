@@ -1,0 +1,51 @@
+/* CSS for the logout button */
+.btn-1 {
+    background-color: whitesmoke; /* Red background color */
+    border: none; /* Remove border */
+    border-radius: 50px;
+    color: black; /* White text color */
+    padding: 10px 20px; /* Add padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Display as inline block */
+    font-size: 16px; /* Increase font size */
+    cursor: pointer; /* Add cursor pointer on hover */
+    margin-top: 20px; /* Add top margin */
+    list-style: none;
+}
+
+.btn-1:hover {
+    background-color: lightseagreen; /* Darker red color on hover */
+}
+
+
+.btn-ul {
+    display: flex;
+    justify-content: center;
+    justify-content: space-around;
+    list-style: none;
+}
+
+.btn-logout {
+
+    background-color: black;
+    color: red;
+    font-weight: bold;
+    border: none; /* Remove border */
+    border-radius: 50px;
+    padding: 10px 20px; /* Add padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Display as inline block */
+    cursor: pointer; /* Add cursor pointer on hover */
+    margin-top: 20px; /* Add top margin */
+    list-style: none;
+}
+
+.btn-logout:hover {
+    display: flex;
+    justify-content:right;
+    background-color: red;
+    color: black;
+
+}
