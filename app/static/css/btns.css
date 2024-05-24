@@ -36,16 +36,18 @@
     padding: 10px 20px; /* Add padding */
     text-align: center; /* Center text */
     text-decoration: none; /* Remove underline */
-    display: inline-block; /* Display as inline block */
+    display: flex; /* Display as inline block */
     cursor: pointer; /* Add cursor pointer on hover */
     margin-top: 20px; /* Add top margin */
     list-style: none;
+
 }
 
 .btn-logout:hover {
     display: flex;
-    justify-content:right;
     background-color: red;
     color: black;
+    list-style: none;
+
 
 }

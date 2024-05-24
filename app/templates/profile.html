@@ -12,9 +12,9 @@
 
     <nav>
         <div>
-            <ul class="userlist">
-                <li class="btn-1"><a href="{{ url_for('home_page') }}">Return to Home</a></li>
-                <li class="btn-1"><a href="/logout">Logout</a></li></a> <!-- Logout button -->
+            <ul class="btn-ul">
+                <li ><a href="{{ url_for('home_page') }}" class="btn-1">Return to Home</a></li>
+                <li ><a href="/logout" class="btn-logout">Logout</a></li></a> <!-- Logout button -->
             </ul>
         </div>
     </nav>
@@ -29,5 +29,18 @@
     <p><strong>E-MAIL:</strong> {{ user.email }}</p>
     <!-- Add more user information as needed -->
     </div>
+
+    <br><br>
+
+    <footer class="intro">
+        <div class="footer-content">
+            <p> KNOW IT ALL &copy; 2024. All rights reserved.</p>
+            <ul class="btn-ul">
+                <li><a href="terms.html"  class="btn-1">Terms of Service</a></li>
+                <li><a href="privacy_policy.html" class="btn-1">Privacy Policy</a></li>
+                <li><a href="contact_us.html" class="btn-1">Contact Us</a></li>
+            </ul>
+        </div>
+    </footer>
 </body>
 </html>
