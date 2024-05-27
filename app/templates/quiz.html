@@ -1,84 +1,135 @@
-<!-- templates/quiz.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .question {
-            margin: 20px 0;
-        }
-        .options {
-            list-style-type: none;
-            padding: 0;
-        }
-        .options li {
-            margin-bottom: 10px;
-        }
-        .submit-btn {
-            display: block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: #FFF;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Quiz</h1>
-        <form id="quizForm">
-            {% for question in questions %}
-                <div class="question">
-                    <p>{{ question.question }}</p>
-                    <ul class="options">
-                        {% for option in question.options %}
-                            <li>
-                                <input type="radio" name="question{{ loop.index }}" value="{{ option }}" required>
-                                <label>{{ option }}</label>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endfor %}
-            <button type="submit" class="submit-btn">Submit</button>
-        </form>
-    </div>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/btns.css') }}">
 
     <script>
-        document.getElementById('quizForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            let form = event.target;
-            let formData = new FormData(form);
-            let answers = {};
-            for (let pair of formData.entries()) {
-                answers[pair[0]] = pair[1];
+        let currentQuestionIndex = 0;
+        let questions = [];
+        let score = 0;
+        let timer = 99;
+        let timerInterval;
+        
+        function fetchQuestions() {
+            fetch('/get_questions')
+                .then(response => response.json())
+                .then(data => {
+                    questions = data;
+                    displayQuestion();
+                    startTimer();
+                });
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timer > 0) {
+                    timer--;
+                    document.getElementById('timer').innerText = `Time: ${timer}s`;
+                } else {
+                    gameOver();
+                }
+            }, 1000);
+        }
+
+        function displayQuestion() {
+            const question = questions[currentQuestionIndex];
+            if (!question) {
+                gameOver();
+                return;
             }
-            fetch('/submit_quiz', {
+            document.getElementById('questionText').innerText = `${question.text} (Difficulty: ${question.difficulty})`;
+            const options = question.options;
+            options.forEach((option, index) => {
+                document.getElementById(`option${index}`).innerText = option;
+                document.getElementById(`option${index}`).onclick = () => checkAnswer(index);
+            });
+        }
+
+        function checkAnswer(selectedIndex) {
+            const question = questions[currentQuestionIndex];
+            if (selectedIndex == question.correct) {
+                score += calculateScore(currentQuestionIndex + 1, question.difficulty);
+                document.getElementById('score').innerText = `Score: ${score}`;
+                currentQuestionIndex++;
+                displayQuestion();
+            } else {
+                gameOver();
+            }
+        }
+
+        function calculateScore(questionNumber, difficulty) {
+            const baseScore = fibonacci(questionNumber);
+            const difficultyMultiplier = difficulty === 'easy' ? 1 : difficulty === 'medium' ? 2 : 3;
+            return baseScore * difficultyMultiplier;
+        }
+
+        function fibonacci(n) {
+            if (n <= 1) return n;
+            return fibonacci(n - 1) + fibonacci(n - 2);
+        }
+
+        function gameOver() {
+            clearInterval(timerInterval);
+            document.getElementById('questionText').innerText = 'Game Over!';
+            document.getElementById('options').innerHTML = '';
+            updateHighscore();
+        }
+
+        function updateHighscore() {
+            fetch('/update_highscore', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(answers)
+                body: JSON.stringify({ highscore: score })
             })
             .then(response => response.json())
             .then(data => {
-                alert(`Your score: ${data.score}`);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-           
+                if (data.success) {
+                    alert('Highscore updated!');
+                }
+            });
+        }
+
+        function fetchHighscore() {
+            fetch('/get_highscore')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('highscore').innerText = `Highscore: ${data.highscore}`;
+                });
+        }
+
+        window.onload = function() {
+            fetchQuestions();
+            fetchHighscore();
+        }
+    </script>
+</head>
+<body>
+    <nav>
+        <span id="username">Logged in as: {{ username }}</span>
+        <a href="/home" class="btn-1">Home</a>
+        <a href="/logout" class="btn-logout">Logout</a>
+    </nav>
+
+    <h1>Quiz</h1>
+    <div class="quiz-box">
+<div class="time-highscore">
+    <div class="timer" id="timer">Time: 99s</div>
+    <div class="highscore" id="highscore">Highscore: 0</div>
+</div>
+    <div class="score" id="score">Score: 0</div>
+    <div class="question" id="questionText"></div>
+    <div class="options" id="options">
+        <button id="option0"></button>
+        <button id="option1"></button>
+        <button id="option2"></button>
+        <button id="option3"></button>
+    </div>
+    </div>
+</body>
+</html>

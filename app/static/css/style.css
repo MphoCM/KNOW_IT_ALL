@@ -1,20 +1,21 @@
 :root {
+
+    --color-primary: lightcoral;
+    --color-black: black;
+    --color-white: white;
+    --color-red: red;
+    --color-green: green;
+    display: flex;
+    justify-content: center;
     padding: 12px;
     background-color: lightcoral;
 }
-/* Responsive styles */
-@media only screen and (max-width: 800px) {
-    /* Adjustments for smaller screens */
-    body {
-        font-size: 16px; /* Adjust font size */
-    }
 
-
-.hdr {
+.hdr, html {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border: 3px solid lime;
+    border: 3px solid var(--color-green);
 }
 
 .hdr img {
@@ -28,52 +29,34 @@
     display: flex;
     justify-content: center;
     justify-content: space-evenly;
-    background-color: lightseagreen;
+    background-color: var(--color-primary);
     border: 3px solid black;
     
 }
 
+nav {
+    display: flex;
+    justify-content: center;
+}
 
-
+.flex-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
 nav ul {
-    flex-direction: column;
+    gap: 5px;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 nav li {
     margin-bottom: 10px;
 }
 
-
-/* Adjustments for larger screens */
-@media only screen and (min-width: 100px) {
-    body {
-        font-size: 18px; /* Increase font size for larger screens */
-    }
-
-    .intro {
-        padding: 40px; /* Add more padding */
-    }
-
-    .hdr img {
-        max-width: 100%; /* Limit image width for larger screens */
-    }
-
-    nav ul {
-        flex-direction: row; /* Display items horizontally */
-    }
-
-    nav li {
-        margin-right: 20px; /* Add margin between list items */
-    }
-
-    /* Add other responsive adjustments as needed */
-}
-
-
-
-}
 .userlist, a {
-    color: black;
+    align-items: center;
 }
 
 .form {
@@ -117,4 +100,72 @@ footer {
     display: flex;
     justify-content:flex-end;
     justify-content: space-around;
+}
+
+/*
+ * Game
+ * timer
+score
+highscore
+question
+options
+ */
+
+ .quiz-box {
+    gap: 50px;
+    display: flex;
+    flex-direction: column;
+
+ }
+
+.timer {
+    display: flex;
+    justify-content: center;
+    border-radius: 75%;
+    padding: 5px;
+    border: 3px solid red;
+}
+
+.time-highscore {
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+}
+
+.score {
+    padding: 15px;
+    border-left: 5px solid var(--color-black);
+    
+}
+
+.highscore {
+    padding: 5px;
+    border: 3px solid var(--color-green);
+
+
+}
+
+.question {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    border-bottom: 1px solid;
+
+}
+
+.options {
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.containerQues {
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border: 1px solid;
+    font-size: 12px;
+    font-style:oblique;
+    margin: 10px;
 }

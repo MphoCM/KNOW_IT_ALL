@@ -14,8 +14,27 @@
     list-style: none;
 }
 
+.btn-2 {
+    background-color: whitesmoke; /* Red background color */
+    border: none; /* Remove border */
+    border-radius: 50px;
+    color: black; /* White text color */
+    padding: 10px 20px; /* Add padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: flex; 
+    align-items: center;
+    font-size: 7px; /* Increase font size */
+    cursor: pointer; /* Add cursor pointer on hover */
+    margin-top: 20px; /* Add top margin */
+    list-style: none;
+}
 .btn-1:hover {
     background-color: lightseagreen; /* Darker red color on hover */
+}
+
+.btn-2:hover {
+    background-color: lightcoral; /* Darker red color on hover */
 }
 
 
@@ -51,3 +70,49 @@
 
 
 }
+
+
+/*
+ * Quiz update
+ */
+
+ .quiz-update-head {
+    display: flex;
+    flex-direction: column;
+}
+
+.quiz-update-body {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+}
+
+.quiz-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-content: space-between;
+}
+
+.quiz-update-select {
+    display: flex;
+    justify-content: center;
+ }
+
+ .quiz-update-select-level {
+     padding: 5px;
+     display:flex;
+     justify-content:space-evenly;
+    align-items: center;
+ }
+ 
+ .difficulty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 100;
+    padding: 2px;
+    gap: 5px;
+    border: 3px solid;
+ }

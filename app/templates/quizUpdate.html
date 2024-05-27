@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Update</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/btns.css') }}">
+
+    <script>
+        let questions = [];
+
+        function fetchQuestions() {
+            fetch('/get_questions')
+                .then(response => response.json())
+                .then(data => {
+                    questions = data;
+                    displayQuestions();
+                });
+        }
+
+        function displayQuestions() {
+            const questionsContainer = document.getElementById('questionsContainer');
+            questionsContainer.innerHTML = '';
+            questions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+
+                questionDiv.innerHTML = `
+                    <p>${index + 1}. ${question.text} (Difficulty: ${question.difficulty})</p>
+                    <ul>
+                        ${question.options.map((option, i) => `<li>${option}</li>`).join('')}
+                    </ul>
+                    <button onclick="deleteQuestion('${question.id}')">Delete</button>
+                    <button onclick="editQuestion('${question.id}')">Edit</button>
+                `;
+                questionsContainer.appendChild(questionDiv);
+            });
+        }
+
+        function deleteQuestion(questionId) {
+            fetch(`/delete_question/${questionId}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    fetchQuestions();
+                } else {
+                    alert('Error deleting question');
+                }
+            });
+        }
+
+        function addQuestion() {
+            const text = document.getElementById('questionText').value;
+            const options = [
+                document.getElementById('option0').value,
+                document.getElementById('option1').value,
+                document.getElementById('option2').value,
+                document.getElementById('option3').value
+            ];
+            const correct = document.getElementById('correctOption').value;
+            const difficulty = document.querySelector('input[name="difficulty"]:checked').value;
+
+            const newQuestion = {
+                text,
+                options,
+                correct: parseInt(correct),
+                difficulty
+            };
+
+            fetch('/add_question', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newQuestion)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    fetchQuestions();
+                } else {
+                    alert('Error adding question');
+                }
+            });
+        }
+
+        function editQuestion(questionId) {
+            const question = questions.find(q => q.id === questionId);
+            if (!question) return;
+
+            document.getElementById('questionText').value = question.text;
+            document.getElementById('option0').value = question.options[0];
+            document.getElementById('option1').value = question.options[1];
+            document.getElementById('option2').value = question.options[2];
+            document.getElementById('option3').value = question.options[3];
+            document.getElementById('correctOption').value = question.correct;
+            document.querySelector(`input[name="difficulty"][value="${question.difficulty}"]`).checked = true;
+
+            document.getElementById('saveButton').onclick = () => updateQuestion(questionId);
+        }
+
+        function updateQuestion(questionId) {
+            const text = document.getElementById('questionText').value;
+            const options = [
+                document.getElementById('option0').value,
+                document.getElementById('option1').value,
+                document.getElementById('option2').value,
+                document.getElementById('option3').value
+            ];
+            const correct = document.getElementById('correctOption').value;
+            const difficulty = document.querySelector('input[name="difficulty"]:checked').value;
+
+            const updatedQuestion = {
+                text,
+                options,
+                correct: parseInt(correct),
+                difficulty
+            };
+
+            fetch(`/update_question/${questionId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedQuestion)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    fetchQuestions();
+                    document.getElementById('saveButton').onclick = addQuestion;
+                } else {
+                    alert('Error updating question');
+                }
+            });
+        }
+
+        window.onload = function() {
+            fetchQuestions();
+            document.getElementById('username').innerText = `Logged in as: {{ username }}`;
+            document.getElementById('saveButton').onclick = addQuestion;
+        }
+    </script>
+</head>
+<body>
+    <nav class="flex-nav">
+        <span id="username">Logged in as: {{ username }}</span>
+        <a href="/home" class="btn-1">Home</a>
+        <a href="/logout" class="btn-logout">Logout</a>
+    </nav>
+
+    <div class="quiz-update-head">
+    <h1>Quiz Update</h1>
+    <div class="quiz-update-body"><p>Enter a New Question: </p>
+        <input type="text" id="questionText" placeholder="Enter question text" required>
+        <p>Decoy Options:</p>
+        <div class="quiz-options">
+            
+            <input type="text" id="option0" placeholder="Option 1" required>
+            <input type="text" id="option1" placeholder="Option 2" required>
+            <input type="text" id="option2" placeholder="Option 3" required>
+            <input type="text" id="option3" placeholder="Option 4" required>
+           
+        </div>
+        <div class="quiz-update-select-level">
+            <div class="difficulty">
+            <h3>Correct Option Is:</h3>
+            <select id="correctOption" required class="quiz-update-select">
+                <option class="btn-1" value="0">Option 1</option>
+                <option value="1">Option 2</option>
+                <option value="2">Option 3</option>
+                <option value="3">Option 4</option>
+            </select>
+            </div>
+            <div class="difficulty"> 
+                <h3>Difficulty:</h3>
+            <label><input type="radio" name="difficulty" value="easy" required> Easy</label>
+            <label><input type="radio" name="difficulty" value="medium"> Medium</label>
+            <label><input type="radio" name="difficulty" value="hard"> Hard</label>
+        </div>
+        </div>
+        <button id="saveButton">Save Question</button>
+    </div>
+    <div class="containerQues" id="questionsContainer"></div>
+</div>
+</body>
+</html>

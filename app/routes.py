@@ -128,16 +128,69 @@ def profile(username):
         flash('User not found', 'error')
         return redirect(url_for('home'))
 
+# Routes for the application
 @app.route('/quiz')
 def quiz():
-    return render_template('quiz.html', questions=quiz_questions)
+    username = session.get('username')
+    if not username:
+        flash('Please log in to access the quiz', 'error')
+        return redirect(url_for('home'))        
+    return render_template('quiz.html', username=username)
 
-@app.route('/submit_quiz', methods=['POST'])
-def submit_quiz():
-    answers = request.json
-    score = 0
-    for question in quiz_questions:
-        question_id = f"question{quiz_questions.index(question) + 1}"
-        if question_id in answers and answers[question_id] == question['correct']:
-            score += 1
-    return jsonify({'score': score})
+@app.route('/quiz_update')
+def quiz_update():
+    username = session.get('username')
+    return render_template('quizUpdate.html', username=username)
+
+@app.route('/get_questions', methods=['GET'])
+def get_questions():
+    questions_ref = db.collection('questions')
+    questions = questions_ref.stream()
+    questions_list = []
+    for question in questions:
+        question_dict = question.to_dict()
+        question_dict['id'] = question.id  # Add the document ID to the question data
+        questions_list.append(question_dict)
+    return jsonify(questions_list)
+
+@app.route('/add_question', methods=['POST'])
+def add_question():
+    data = request.json
+    db.collection('questions').add(data)
+    return jsonify({'success': True}), 200
+
+@app.route('/update_question/<question_id>', methods=['POST'])
+def update_question(question_id):
+    data = request.json
+    question_ref = db.collection('questions').document(question_id)
+    question_ref.update(data)
+    return jsonify({'success': True}), 200
+
+@app.route('/delete_question/<question_id>', methods=['DELETE'])
+def delete_question(question_id):
+    question_ref = db.collection('questions').document(question_id)
+    question_ref.delete()
+    return jsonify({'success': True}), 200
+
+
+
+@app.route('/get_highscore', methods=['GET'])
+def get_highscore():
+    if 'username' not in session:
+        return jsonify({'error': 'User not logged in'}), 403
+    username = session['username']
+    user_ref = db.collection('users').document(username)
+    user_doc = user_ref.get()
+    if user_doc.exists:
+        return jsonify({'highscore': user_doc.to_dict().get('highscore', 0)})
+    return jsonify({'highscore': 0})
+
+@app.route('/update_highscore', methods=['POST'])
+def update_highscore():
+    if 'username' not in session:
+        return jsonify({'error': 'User not logged in'}), 403
+    username = session['username']
+    new_highscore = request.json['highscore']
+    user_ref = db.collection('users').document(username)
+    user_ref.set({'highscore': new_highscore}, merge=True)
+    return jsonify({'success': True})
