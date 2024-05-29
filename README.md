@@ -1,5 +1,5 @@
 # KNOW IT ALL
-# Guide for this Project Idea Bank
+# Gateway to Knowledge.
 
 A team without Back-End engineers.
 * Firebase as your backend.
