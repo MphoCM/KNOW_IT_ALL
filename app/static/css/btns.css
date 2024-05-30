@@ -17,6 +17,8 @@
     border-radius: 75pt ;
     padding: 5pt;
     background-color: var(--color-secondary);
+    color:  var(--color-black);
+    font-weight: bold;
  }
 
  .btn-logout {
@@ -24,4 +26,5 @@
     padding: 5pt;
     background-color: var(--color-black);
     color: red;
+    font-weight: bold;
  }
