@@ -1,0 +1,134 @@
+/*
+ * Quiz Page Styling
+ */
+
+ :root {
+    /* color:; */
+     --color-primary: #c4b;
+     --color-secondary: #4eafcb;
+     --color-black: black;
+     --color-white: white;
+     --color-red: red;
+ 
+     --test-color: lime;
+ }
+
+.flex-nav {
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    justify-content: space-around;
+    align-items: center;    
+}
+
+.user-highscore {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2px;
+}
+
+.highscore {
+    padding: 15px;
+    
+}
+
+.gameBoard {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.time-score {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.timer {
+    padding: 5px;
+    
+
+}
+
+.score {
+
+}
+
+.que-container {
+
+}
+
+.popup {
+
+}
+
+
+
+.quiz-update-head {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.quiz-update-body {
+
+
+}
+
+.quiz-options {
+    gap: 12px;
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.quiz-update-select-level {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    
+    
+}
+
+.difficulty {
+    padding: 2rem;
+    align-items: center;
+    
+}
+
+.quiz-update-select {
+    background-color: aqua;
+
+}
+
+.containerQues {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 3px solid black;
+
+}
+
+.saveButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.saveButton-color {
+    padding: 5px;
+    border-radius: 75pt;
+    background-color: aqua;
+
+}

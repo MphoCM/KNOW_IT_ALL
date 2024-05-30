@@ -5,22 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/layout.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/btns.css') }}">
-    <!-- Add any additional CSS or external stylesheets -->
 </head>
 <body>
-    <header>
-        <nav>
-            <ul class="btn-ul">
-                <li ><a href="/" class="btn-1">Home</a></li>
-                <li><a href="/profile/{{ username }}" class="btn-1">Profile</a></li>
-                <li><a href="{{ url_for('quiz') }}" class="btn-1">Quiz</a></li>
-                <li><a href="/logout" class="btn-logout">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
+
+    {% include 'layout/header.html' %}
+    {% include 'layout/navBar.html' %}
 
     <main>
+        <br><br>
+        <li><a href="/profile/{{ username }}" class="btn-1" >Profile</a></li>
         <section class="intro">
             <h1>Welcome{{ " " + username if username else "" }}</h1>
             <!-- Add any additional content here -->
@@ -28,20 +23,13 @@
 
         <section class="content">
             <!-- Add content for this section -->
-            <h2>Featured Content</h2>
-            <p>This is some example content for the featured section. You can add more content here.</p>
+            <h2>Quiz Application</h2>
+            <p>So Tell Me. Do you think you've got the answers? </p>
         </section>
     </main>
 
-    <footer class="intro">
-        <div class="footer-content">
-            <p> KNOW IT ALL &copy; 2024. All rights reserved.</p>
-            <ul>
-                <li><a class="btn-2" href="terms.html">Terms of Service</a></li>
-                <li><a class="btn-2" href="privacy_policy.html">Privacy Policy</a></li>
-                <li><a class="btn-2" href="contact_us.html">Contact Us</a></li>
-            </ul>
-        </div>
-    </footer>
+    {% include 'layout/footer.html' %}
+
+   
 </body>
 </html>

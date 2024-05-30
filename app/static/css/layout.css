@@ -1,0 +1,66 @@
+/*
+ * Layout format
+ *
+ * @header
+ * @footer
+ * navBar
+ */
+
+:root {
+    /* color:; */
+     --color-primary: #c4b;
+     --color-secondary: #4eafcb;
+     --color-black: black;
+     --color-white: white;
+     --color-red: red;
+ 
+     --test-color: lime;
+ }
+
+/*
+ * navBar
+ */
+nav {
+    border: 1px solid var(--color-secondary);
+    
+}
+
+.nav-ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+
+}
+
+/*
+ * header and footer
+ */
+header, footer {
+    padding: 1rem;
+    gap: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+footer {
+    border: 1px solid var(--color-secondary);
+    padding: 2rem;
+    align-items: end;
+    align-items: center;
+}
+
+.footer-reserved {
+    margin: 0px;
+    padding: 15px;
+}
+
+.footer-terms {
+    align-items: center;
+    
+}
+
+.footer-ul {
+    list-style: none;
+    
+}

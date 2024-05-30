@@ -1,171 +1,74 @@
-:root {
+/*
+* Web Application Styling
+*/
 
-    --color-primary: lightcoral;
+    :root {
+/* color:; */
+    --color-primary: #c4b;
+    --color-secondary: #4eafcb;
     --color-black: black;
     --color-white: white;
     --color-red: red;
-    --color-green: green;
+
+    --test-color: lime;
+    }
+
+
+/*
+* body - html element
+*/
+    html {
     display: flex;
     justify-content: center;
-    padding: 12px;
-    background-color: lightcoral;
-}
-
-.hdr, html {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border: 3px solid var(--color-green);
-}
-
-.hdr img {
-    width: 100%;
-    height: auto;
-}
-
-.intro {
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    justify-content: space-evenly;
     background-color: var(--color-primary);
-    border: 3px solid black;
-    
-}
+    color: var(--color-black)
+    }
 
-nav {
+
+    .username-display {
     display: flex;
     justify-content: center;
-}
+    }
 
-.flex-nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: row;
-}
-nav ul {
-    gap: 5px;
-    flex-direction: row;
-    justify-content: space-evenly;
-}
-
-nav li {
-    margin-bottom: 10px;
-}
-
-.userlist, a {
-    align-items: center;
-}
-
-.form {
-    padding: 2px;
-}
-
-/*
- * message Alerts
- ==================*/
-#success-message {
-    color: green;
-    font-weight: bold;
-}
-
-#error-message {
-    color: red;
-    font-weight: bold;
-}
-
-.popup-message {
-    display: flex;
-    justify-content: center;
-    background-color: lime;
-    color: black;
-    font-weight: bold;
-
-}
-
-.userProfile {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-}
-
-/*
- * Footer Settings
- ===================*/
-footer {
-    display: flex;
-    justify-content:flex-end;
-    justify-content: space-around;
-}
-
-/*
- * Game
- * timer
-score
-highscore
-question
-options
- */
-
- .quiz-box {
-    gap: 50px;
+    .highscore-container {
+    margin-top: 30px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
+    justify-content:space-between;
+    background-color: var(--color-secondary);
+    }
 
- }
-
-.timer {
+    .highscore-header {
+    margin-top: 30px;
+    padding: 10px;
     display: flex;
     justify-content: center;
-    border-radius: 75%;
+    background-color: var(--color-secondary);
+    }
+
+    table {
     padding: 5px;
-    border: 3px solid red;
-}
+    display: flex;
+    flex-direction: column;
+    }
 
-.time-highscore {
+
+
+tr {
+    margin-top: 5px;    
     display: flex;
     justify-content: center;
     justify-content: space-between;
-}
+    border: 5px solid var(--color-primary);
 
-.score {
-    padding: 15px;
-    border-left: 5px solid var(--color-black);
-    
-}
+    }
 
-.highscore {
+    td {
     padding: 5px;
-    border: 3px solid var(--color-green);
+    }
 
-
-}
-
-.question {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 5px;
-    border-bottom: 1px solid;
-
-}
-
-.options {
-    display: flex;
-    justify-content: center;
-    justify-content: space-evenly;
-}
-
-.containerQues {
-    padding: 2px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    border: 1px solid;
-    font-size: 12px;
-    font-style:oblique;
-    margin: 10px;
-}
+    .intro {
+        display: flex;
+        justify-content: center;
+    }

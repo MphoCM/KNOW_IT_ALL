@@ -6,6 +6,11 @@
     <title>Quiz Update</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/btns.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/quiz.css') }}">
+
+
+
 
     <script>
         let questions = [];
@@ -146,11 +151,8 @@
     </script>
 </head>
 <body>
-    <nav class="flex-nav">
-        <span id="username">Logged in as: {{ username }}</span>
-        <a href="/home" class="btn-1">Home</a>
-        <a href="/logout" class="btn-logout">Logout</a>
-    </nav>
+    {% include 'layout/header.html' %}
+    {% include 'layout/navBar.html' %}
 
     <div class="quiz-update-head">
     <h1>Quiz Update</h1>
@@ -182,9 +184,13 @@
             <label><input type="radio" name="difficulty" value="hard"> Hard</label>
         </div>
         </div>
-        <button id="saveButton">Save Question</button>
+        <div class="saveButton">
+        <button id="saveButton" class="saveButton-color">Save Question</button>
+        </div>
     </div>
     <div class="containerQues" id="questionsContainer"></div>
 </div>
+
+{% include 'layout/footer.html' %}
 </body>
 </html>

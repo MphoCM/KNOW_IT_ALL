@@ -3,83 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
+    <title>Quiz Game</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/btns.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/quiz.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/layout.css') }}">
+</head>
+<body>
+    {% include 'layout/header.html' %}
+    
+    <nav class="flex-nav">
+        <a href="/home" class="btn-1"> Return Home</a>
+        <a href="/highscore" class="btn-1">High Scores</a>
+        <a href="/logout" class="btn-logout">Logout</a>
+    </nav>
+
+    <div class="user-highscore">
+        <div class="username-display">
+            <span id="username" data-username="{{ username }}">Logged in as: {{ username }}</span>
+        </div>
+        <div class="highscore">
+            <span id="highscore">Your High Score: {{ highscore }}</span>
+        </div>
+    </div>
+
+    <div class="time-score">
+        <div class="timer">
+            <span id="timer" class="timer" style="display: none;">5s</span>
+        </div>
+        <div class="score">
+            <span id="score" style="display: none;">Score: 0</span>
+        </div>
+    </div>
+    <div class="gameBoard">
+        <div id="questionContainer" class="que-container"></div>
+        <div id="popup" class="popup"></div>
+    </div>
+
+    {% include 'layout/footer.html' %}
 
     <script>
+        let easyQuestions = [];
+        let mediumQuestions = [];
+        let hardQuestions = [];
+        let currentQuestions = [];
         let currentQuestionIndex = 0;
-        let questions = [];
+        let currentDifficulty = 'easy';
         let score = 0;
-        let timer = 99;
-        let timerInterval;
-        
+        let timer;
+        let timeRemaining = 20; // 20 seconds for each question
+
+        // Fetch questions from the server
         function fetchQuestions() {
             fetch('/get_questions')
                 .then(response => response.json())
                 .then(data => {
-                    questions = data;
-                    displayQuestion();
-                    startTimer();
+                    categorizeQuestions(data);
+                    showStartButton();
                 });
         }
 
+        // Categorize questions based on difficulty
+        function categorizeQuestions(questions) {
+            easyQuestions = questions.filter(q => q.difficulty === 'easy');
+            mediumQuestions = questions.filter(q => q.difficulty === 'medium');
+            hardQuestions = questions.filter(q => q.difficulty === 'hard');
+            shuffleQuestions(easyQuestions);
+            shuffleQuestions(mediumQuestions);
+            shuffleQuestions(hardQuestions);
+        }
+
+        // Shuffle questions using Fisher-Yates algorithm
+        function shuffleQuestions(questions) {
+            for (let i = questions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [questions[i], questions[j]] = [questions[j], questions[i]];
+            }
+        }
+
+        // Display start button
+        function showStartButton() {
+            const questionContainer = document.getElementById('questionContainer');
+            questionContainer.innerHTML = `
+                <button onclick="startQuiz()">Start Quiz</button>
+                <button onclick="quitQuiz()">Quit</button>
+            `;
+        }
+
+        // Start the quiz
+        function startQuiz() {
+            currentQuestions = easyQuestions;
+            currentQuestionIndex = 0;
+            currentDifficulty = 'easy';
+            score = 0;
+            document.getElementById('score').style.display = 'inline-block';
+            document.getElementById('timer').style.display = 'inline-block';
+            displayNextQuestion();
+            startTimer();
+        }
+
+        // Start the timer for each question
         function startTimer() {
-            timerInterval = setInterval(() => {
-                if (timer > 0) {
-                    timer--;
-                    document.getElementById('timer').innerText = `Time: ${timer}s`;
-                } else {
+            timeRemaining = 20;
+            updateTimerDisplay();
+            timer = setInterval(() => {
+                timeRemaining--;
+                console.log(`Time remaining: ${timeRemaining}s`);
+                updateTimerDisplay();
+                if (timeRemaining === 0) {
+                    clearInterval(timer);
                     gameOver();
                 }
-            }, 1000);
+            }, 1000); // Decrement the timer every 1 second
         }
 
-        function displayQuestion() {
-            const question = questions[currentQuestionIndex];
-            if (!question) {
-                gameOver();
+        // Update the timer display
+        function updateTimerDisplay() {
+            const timerDisplay = document.getElementById('timer');
+            timerDisplay.innerText = timeRemaining > 0 ? `${timeRemaining}s` : `Time's Up!`;
+        }
+
+        // Display the next question
+        function displayNextQuestion() {
+            clearInterval(timer); // Clear any existing timer
+            if (currentQuestionIndex >= currentQuestions.length) {
+                if (currentDifficulty === 'easy') {
+                    currentDifficulty = 'medium';
+                    currentQuestions = mediumQuestions;
+                    currentQuestionIndex = 0;
+                    showLevelPopup('You have completed the Easy level. Moving on to the Medium level!');
+                } else if (currentDifficulty === 'medium') {
+                    currentDifficulty = 'hard';
+                    currentQuestions = hardQuestions;
+                    currentQuestionIndex = 0;
+                    showLevelPopup('You have completed the Medium level. Moving on to the Hard level!');
+                } else {
+                    endQuiz();
+                    return;
+                }
+            }
+
+            const question = currentQuestions[currentQuestionIndex];
+            const questionContainer = document.getElementById('questionContainer');
+            questionContainer.innerHTML = `
+                <p>${currentQuestionIndex + 1}. ${question.text}</p>
+                <ul>
+                    ${question.options.map((option, i) => `
+                        <li>
+                            <input type="radio" name="option" value="${i}" id="option${i}">
+                            <label for="option${i}">${option}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+                <button onclick="submitAnswer()">Submit</button>
+            `;
+
+            startTimer(); // Start the timer for the new question
+        }
+
+        // Submit the selected answer
+        function submitAnswer() {
+            clearInterval(timer); // Stop the timer
+        
+            const selectedOption = document.querySelector('input[name="option"]:checked');
+            if (!selectedOption) {
+                alert('Please select an option');
                 return;
             }
-            document.getElementById('questionText').innerText = `${question.text} (Difficulty: ${question.difficulty})`;
-            const options = question.options;
-            options.forEach((option, index) => {
-                document.getElementById(`option${index}`).innerText = option;
-                document.getElementById(`option${index}`).onclick = () => checkAnswer(index);
-            });
-        }
-
-        function checkAnswer(selectedIndex) {
-            const question = questions[currentQuestionIndex];
-            if (selectedIndex == question.correct) {
-                score += calculateScore(currentQuestionIndex + 1, question.difficulty);
+        
+            const answer = parseInt(selectedOption.value);
+            const correctAnswer = currentQuestions[currentQuestionIndex].correct;
+            const popup = document.getElementById('popup');
+            if (answer === correctAnswer) {
+                score += 10;
+                popup.innerText = `Correct! +10 Points!`;
+                popup.className = 'popup correct';
+            } else {
+                score -= 10;
+                popup.innerText = `Incorrect! -10 Points! Correct answer was: ${currentQuestions[currentQuestionIndex].options[correctAnswer]}`;
+                popup.className = 'popup incorrect';
+            }
+        
+            popup.style.display = 'block';
+            setTimeout(() => {
+                popup.style.display = 'none';
                 document.getElementById('score').innerText = `Score: ${score}`;
                 currentQuestionIndex++;
-                displayQuestion();
-            } else {
-                gameOver();
-            }
+                if (currentQuestionIndex >= currentQuestions.length) {
+                    if (currentDifficulty === 'easy') {
+                        currentDifficulty = 'medium';
+                        currentQuestions = mediumQuestions;
+                        currentQuestionIndex = 0;
+                        showLevelPopup('You have completed the Easy level. Moving on to the Medium level!');
+                    } else if (currentDifficulty === 'medium') {
+                        currentDifficulty = 'hard';
+                        currentQuestions = hardQuestions;
+                        currentQuestionIndex = 0;
+                        showLevelPopup('You have completed the Medium level. Moving on to the Hard level!');
+                    } else {
+                        endQuiz();
+                        // Update high score when quiz is completed
+                        updateHighScore(score);
+                        return;
+                    }
+                } else {
+                    displayNextQuestion();
+                }
+            }, 1000); // Show the correct answer for 1 second before moving to the next question
         }
 
-        function calculateScore(questionNumber, difficulty) {
-            const baseScore = fibonacci(questionNumber);
-            const difficultyMultiplier = difficulty === 'easy' ? 1 : difficulty === 'medium' ? 2 : 3;
-            return baseScore * difficultyMultiplier;
+        // Show level completion popup
+        function showLevelPopup(message) {
+            const popup = document.getElementById('popup');
+            popup.innerText = message;
+            popup.className = 'popup level';
+            popup.style.display = 'block';
+            setTimeout(() => {
+                popup.style.display = 'none';
+                displayNextQuestion();
+            }, 5000); // Show the level completion message for 5 seconds
         }
 
-        function fibonacci(n) {
-            if (n <= 1) return n;
-            return fibonacci(n - 1) + fibonacci(n - 2);
+        // End the quiz and save the high score
+        function endQuiz() {
+            saveHighScore(score);
+            document.getElementById('questionContainer').innerHTML = `
+                <h2>Quiz Over!</h2>
+                <p>Your score: ${score}</p>
+                ${score === 300 ? '<p>Congratulations! You have completed the quiz!</p>' : ''}
+                <button onclick="window.location.reload()">Play Again</button>
+                <button onclick="quitQuiz()">Quit</button>
+            `;
         }
 
+        // Handle game over due to time running out
         function gameOver() {
-            clearInterval(timerInterval);
-            document.getElementById('questionText').innerText = 'Game Over!';
-            document.getElementById('options').innerHTML = '';
-            updateHighscore();
+            document.getElementById('questionContainer').innerHTML = `
+                <h2>Game Over!</h2>
+                <p>Your time ran out.</p>
+                <p>Your score: ${score}</p>
+                <button onclick="window.location.reload()">Try Again</button>
+                <button onclick="quitQuiz()">Quit</button>
+            `;
         }
 
-        function updateHighscore() {
+        // Quit the quiz and return to home
+        function quitQuiz() {
+            window.location.href = '/home';
+        }
+
+        // Save the high score to the server
+        function saveHighScore(score) {
             fetch('/update_highscore', {
                 method: 'POST',
                 headers: {
@@ -89,47 +263,52 @@
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
-                    alert('Highscore updated!');
+                if (!data.success) {
+                    alert('Error saving high score');
+                } else {
+                    console.log('High score updated successfully');
                 }
             });
         }
 
-        function fetchHighscore() {
-            fetch('/get_highscore')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('highscore').innerText = `Highscore: ${data.highscore}`;
-                });
-        }
+        // Function to end the quiz and save the high score
+    function endQuiz() {
+        saveHighScore(score);
+        document.getElementById('questionContainer').innerHTML = `
+            <h2>Quiz Over!</h2>
+            <p>Your score: ${score}</p>
+            ${score === 300 ? '<p>Congratulations! You have completed the quiz!</p>' : ''}
+            <button onclick="window.location.reload()">Play Again</button>
+            <button onclick="quitQuiz()">Quit</button>
+        `;
+    }
 
+    function updateHighScore(newHighscore) {
+        $.ajax({
+            type: 'POST',
+            url: '/update_highscore',
+            contentType: 'application/json',
+            data: JSON.stringify({ highscore: newHighscore }),
+            success: function(response) {
+                if (response.success) {
+                    console.log('High score updated successfully:', response);
+                    // Optionally, you can handle UI updates here
+                } else {
+                    console.error('Failed to update high score:', response.message);
+                }
+            },
+            error: function(error) {
+                console.error('Error updating high score:', error);
+            }
+        });
+    }
+
+        // Fetch questions and set up the quiz on window load
         window.onload = function() {
             fetchQuestions();
-            fetchHighscore();
+            document.getElementById('username').innerText = `Logged in as: {{ username }}`;
+            document.getElementById('highscore').innerText = `High Score: {{ highscore }}`;
         }
     </script>
-</head>
-<body>
-    <nav>
-        <span id="username">Logged in as: {{ username }}</span>
-        <a href="/home" class="btn-1">Home</a>
-        <a href="/logout" class="btn-logout">Logout</a>
-    </nav>
-
-    <h1>Quiz</h1>
-    <div class="quiz-box">
-<div class="time-highscore">
-    <div class="timer" id="timer">Time: 99s</div>
-    <div class="highscore" id="highscore">Highscore: 0</div>
-</div>
-    <div class="score" id="score">Score: 0</div>
-    <div class="question" id="questionText"></div>
-    <div class="options" id="options">
-        <button id="option0"></button>
-        <button id="option1"></button>
-        <button id="option2"></button>
-        <button id="option3"></button>
-    </div>
-    </div>
 </body>
 </html>

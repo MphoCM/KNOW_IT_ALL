@@ -6,21 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/btns.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/layout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/profile.css') }}">
+
+
     <title>User Profile</title>
 </head>
 <body>
 
-    <nav>
-        <div>
-            <ul class="btn-ul">
-                <li ><a href="{{ url_for('home_page') }}" class="btn-1">Return to Home</a></li>
-                <li><a href="{{ url_for('quiz_update') }}" class="btn-1">Quiz_Update</a></li>
-                <li ><a href="/logout" class="btn-logout">Logout</a></li></a> <!-- Logout button -->
-            </ul>
-        </div>
-    </nav>
+    {% include 'layout/header.html' %}
+    {% include 'layout/navBar.html' %}
     
-    <div class="userProfile intro">
+    <div class="userProfile">
     <h1>USER PROFILE</h1>
     <hr/>
     <p><strong>USERNAME:</strong> {{ user.username }}</p>
@@ -30,18 +27,10 @@
     <p><strong>E-MAIL:</strong> {{ user.email }}</p>
     <!-- Add more user information as needed -->
     </div>
-
+    <br><br>
+    <button class="btn-1"><a href="{{ url_for('quiz_update') }}">Add Questions</a></button>
     <br><br>
 
-    <footer class="intro">
-        <div class="footer-content">
-            <p> KNOW IT ALL &copy; 2024. All rights reserved.</p>
-            <ul class="btn-ul">
-                <li><a href="terms.html"  class="btn-2">Terms of Service</a></li>
-                <li><a href="privacy_policy.html" class="btn-2">Privacy Policy</a></li>
-                <li><a href="contact_us.html" class="btn-2">Contact Us</a></li>
-            </ul>
-        </div>
-    </footer>
+    {% include 'layout/footer.html' %}
 </body>
 </html>

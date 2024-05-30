@@ -1,0 +1,89 @@
+/*
+ * Login Page Styling
+ */
+
+ :root {
+    /* color:; */
+     --color-primary: #c4b;
+     --color-secondary: #4eafcb;
+     --color-black: black;
+     --color-white: white;
+     --color-red: red;
+ 
+     --test-color: lime;
+ }
+ 
+ 
+ /*
+  * body - html element
+  */
+  html {
+     background-color: var(--color-primary);
+     color: var(--color-black)
+  }
+
+  .body-login {
+    gap: 20pt;
+    display: flex;
+    flex-direction: column;
+    border: 5px solid var(--color-black);
+  }
+ /*
+  * Login-Page
+  */
+ 
+ .intro {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+     align-items: center;
+     justify-content: space-evenly;
+ 
+ }
+ 
+ .div-img-logo {
+ 
+ }
+ 
+ .img-logo {
+     border: 3px solid var(--color-secondary);
+     border-radius: 40pt;
+ 
+ }
+ 
+ 
+ .form {
+     display: flex;
+     flex-direction: column;
+     flex-wrap: wrap;
+     padding: 50px;
+     border-radius: 75pt;
+     background-color: var(--color-secondary);
+ }
+ 
+ .btn-login {
+     background-color: var(--color-primary);
+     border-color: var(--color-black);
+     border-radius: 40pt;
+ }
+
+ .btn-login:hover {
+    background-color: var(--color-black);
+    color: var(--color-primary);
+    border: 3px solid var(--color-primary);
+ }
+
+ .title-tagline {
+    display: flex;
+    flex-direction: column;
+ }
+
+ .a-login {
+    margin: 2px;
+    padding: 4px;
+    color: var(--color-primary)    
+ }
+
+ .a-login:hover {
+    background-color: var(--color-black);
+ }

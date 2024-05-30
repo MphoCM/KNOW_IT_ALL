@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # app/routes.py
+
 from flask import (
     render_template,
     redirect,
@@ -8,7 +9,7 @@ from flask import (
     request,
     jsonify,
     flash
-    )
+)
 from app import app, db, quiz_questions
 
 
@@ -17,7 +18,7 @@ def home():
     show_popup = session.pop('show_popup', False)
     return render_template('index.html', show_popup=show_popup)
 
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         session['show_popup'] = True
@@ -128,14 +129,18 @@ def profile(username):
         flash('User not found', 'error')
         return redirect(url_for('home'))
 
-# Routes for the application
 @app.route('/quiz')
 def quiz():
     username = session.get('username')
     if not username:
         flash('Please log in to access the quiz', 'error')
         return redirect(url_for('home'))        
-    return render_template('quiz.html', username=username)
+    
+    user_ref = db.collection('users').document(username)
+    user_doc = user_ref.get()
+    highscore = user_doc.to_dict().get('highscore', 0) if user_doc.exists else 0
+    
+    return render_template('quiz.html', username=username, highscore=highscore)
 
 @app.route('/quiz_update')
 def quiz_update():
@@ -172,25 +177,44 @@ def delete_question(question_id):
     question_ref.delete()
     return jsonify({'success': True}), 200
 
-
-
 @app.route('/get_highscore', methods=['GET'])
 def get_highscore():
     if 'username' not in session:
         return jsonify({'error': 'User not logged in'}), 403
-    username = session['username']
-    user_ref = db.collection('users').document(username)
-    user_doc = user_ref.get()
-    if user_doc.exists:
-        return jsonify({'highscore': user_doc.to_dict().get('highscore', 0)})
-    return jsonify({'highscore': 0})
+    # Fetch top 10 high scores
+    users_ref = db.collection('users').order_by('highscore', direction='DESCENDING').limit(10)
+    users = users_ref.stream()
+
+    # Create a list of dictionaries containing usernames and highscores
+    highscores = [{'username': user.id, 'highscore': user.to_dict().get('highscore', 0)} for user in users]
+
+    # Return the high scores data as JSON
+    return jsonify({'highscores': highscores})
 
 @app.route('/update_highscore', methods=['POST'])
 def update_highscore():
     if 'username' not in session:
-        return jsonify({'error': 'User not logged in'}), 403
+        return jsonify({'success': False, 'message': 'User not logged in'}), 403
+
+    data = request.get_json()
+    new_score = data.get('highscore', 0)
+
     username = session['username']
-    new_highscore = request.json['highscore']
     user_ref = db.collection('users').document(username)
-    user_ref.set({'highscore': new_highscore}, merge=True)
-    return jsonify({'success': True})
+    user_doc = user_ref.get()
+
+    if user_doc.exists:
+        user_data = user_doc.to_dict()
+        current_highscore = user_data.get('highscore', 0)
+        if new_score > current_highscore:
+            user_ref.update({'highscore': new_score})
+            return jsonify({'success': True, 'highscore': new_score})  # Return the updated high score
+        else:
+            return jsonify({'success': True, 'highscore': current_highscore})  # Return the current high score if not updated
+
+    return jsonify({'success': False, 'message': 'User data not found'}), 404
+
+@app.route('/get_username')
+def get_username():
+    username = session.get('username')
+    return jsonify(username=username)

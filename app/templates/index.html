@@ -4,15 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/layout.css') }}">
+
+
     <title>Login Page</title>
 </head>
-<body>
+<body class="body-login">
+
+    {% include 'layout/header.html' %}
 
     <div class="intro">
-        <div class="hdr">
-            <img src="{{ url_for('static', filename='images/img1.jpg') }}" alt="Image 1" width="200px" height="250px">
-        </div>
         
         <div class="form">
             <h1>Login</h1>
@@ -30,10 +32,14 @@
                 <input type="text" id="username" name="username" required><br><br>
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required><br><br>
-                <input type="submit" value="Login">
+                <input class="btn-login" type="submit" value="Login">
             </form>
-            <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a></p>
+            <p>Don't have an account?<br> <a class="a-login" href="{{ url_for('signup') }}">Sign up here</a></p>
         </div>
     </div>
+
+
+
+    {% include 'layout/footer.html' %}
 </body>
 </html>
