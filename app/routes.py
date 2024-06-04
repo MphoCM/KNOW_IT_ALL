@@ -68,8 +68,8 @@ def login():
     username = request.form.get('username')[:20]
     password = request.form.get('password')
     print(
-        f"Received login request for username: {username},
-        password: {password}"
+        f"Received login request for username: {username},"
+        f"password: {password}"
     )
 
     users_ref = db.collection('users')

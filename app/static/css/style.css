@@ -1,19 +1,6 @@
 /*
 * Web Application Styling
 */
-
-    :root {
-/* color:; */
-    --color-primary: #c4b;
-    --color-secondary: #4eafcb;
-    --color-black: black;
-    --color-white: white;
-    --color-red: red;
-
-    --test-color: lime;
-    }
-
-
 /*
 * body - html element
 */

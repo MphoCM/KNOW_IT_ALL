@@ -8,6 +8,8 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/btns.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/layout.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/feedback.css') }}">
+
 
 
     <title>User Profile</title>
@@ -27,10 +29,46 @@
     <p><strong>E-MAIL:</strong> {{ user.email }}</p>
     <!-- Add more user information as needed -->
     </div>
+
+    <div class="form-container" id="feedback-form-container">
+        <button class="close-button" id="close-button">&times;</button>
+        <h2>Feedback Form</h2>
+        <form action="https://formspree.io/f/mvoejbwj" method="POST">
+            <label for="email">Your Email:</label>
+            <input type="email" name="email" id="email" required>
+            <label for="subject">Subject:</label>
+            <input type="text" name="subject" id="subject" required>
+            <label for="message">Your Message:</label>
+            <textarea name="message" id="message" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
     <br><br>
+    <div class="btn-add-feedback">    
     <button class="btn-1"><a href="{{ url_for('quiz_update') }}">Add Questions</a></button>
-    <br><br>
+    
+    <!-- Button to show the form -->
+    <button class="show-form-button" id="show-form-button">Leave Feedback</button>
+    </div>
+
+        <br><br>
 
     {% include 'layout/footer.html' %}
+
+
+    <script>
+        document.getElementById('show-form-button').onclick = function() {
+            var formContainer = document.getElementById('feedback-form-container');
+            formContainer.style.display = 'block';
+            document.getElementById('show-form-button').style.display = 'none';
+        };
+
+        document.getElementById('close-button').onclick = function() {
+            var formContainer = document.getElementById('feedback-form-container');
+            formContainer.style.display = 'none';
+            document.getElementById('show-form-button').style.display = 'block';
+        };
+    </script>
 </body>
 </html>

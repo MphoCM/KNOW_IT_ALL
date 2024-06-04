@@ -13,8 +13,4 @@ cred = credentials.Certificate('serviceAccountKey.json')
 initialize_app(cred)
 db = firestore.client()
 
-# Load quiz questions from a JSON file
-with open('quiz.json') as f:
-    quiz_questions = json.load(f)
-
 from app import routes
