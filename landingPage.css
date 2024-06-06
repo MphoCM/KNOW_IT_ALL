@@ -1,0 +1,169 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 15px;
+    border: 3px solid var(--color-secondary);
+    width: 100%;
+    padding: 5px;
+}
+
+nav a {
+    padding: 5px;
+    color: var(--color-black);
+    }
+
+nav a:hover {
+    background-color: var(--color-secondary);
+
+}
+main {
+    gap: 5px;
+    width: 100%;
+    height: 100vh;
+    }
+    
+main section {
+    border-radius: 15px;
+    padding: 12px;
+}
+
+.head {
+    display: flex;
+    justify-content: center;
+    background-color: var(--color-secondary);
+
+}
+.body-about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-div {
+    margin-right: 100px;
+    max-width: 70vw;
+    display: flex;
+    align-items: center;
+    }
+    
+span{
+    max-width: 45%;
+    padding: 20px;
+}
+    
+.features {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--color-secondary);        
+}
+
+.features h1 {
+    max-width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    border: 3px solid var(--color-black);
+    background-color: var(--color-secondary);
+}
+    
+    .features .description {
+    border: 2px solid;
+    background-color: var(--color-primary);
+    padding: 20px;
+    gap: 20px;
+}
+
+.description {
+    gap: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.description ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+.more {
+    gap: 10px;
+    display: flex;
+}
+    
+.about {
+    padding: 5px;
+    border: 3px solid;
+}
+
+.about li {
+    padding: 5px;
+    display: flex;
+}
+
+.about li:hover {
+    border-left: 5px solid black;
+    border-bottom: 2px solid var(--color-secondary);
+    background-color: var(--color-secondary);
+}
+
+
+.mode-easy:hover{
+    padding: 2px;
+    background-color: lime;
+
+}
+
+.mode-medium:hover {
+    padding: 2px;
+    background-color: orange;
+
+}
+
+.mode-hard:hover {
+    padding: 2px;
+    background-color: red;
+
+}
+
+
+#about_us {
+    margin: 0px;
+    background-color: var(--color-secondary);
+    margin: 0;
+    padding: 2px;        
+}
+.contact {
+    background-color: var(--color-secondary);
+    padding: 5px;
+    border: 3px solid var(--color-secondary);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    align-items: center;
+}
+
+.contact a {
+    padding: 5px;
+    color: var(--color-primary);
+    background-color: black;
+}
+    
+#contact_us {
+    border-radius: 10px;
+    background-color: var(--color-primary);
+    margin: 0;
+    padding: 2px;
+}
+        
+.contact tr {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+
+}

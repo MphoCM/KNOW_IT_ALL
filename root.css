@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*
+ * Landing Page Styling
+ */
+
+ :root {
+    /* color:; */
+     --color-primary: #c4b;
+     --color-secondary: #4eafcb;
+     --color-black: black;
+     --color-white: white;
+     --color-gray: gray;
+     --color-red: red;
+ 
+     --test-color: lime;
+ }
+
+body {
+    height: 150vh;
+    background-color: var(--color-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
