@@ -50,7 +50,7 @@
         let currentDifficulty = 'easy';
         let score = 0;
         let timer;
-        let timeRemaining = 20; // 20 seconds for each question
+        let timeRemaining = 30; // 30 seconds for each question
 
         // Fetch questions from the server
         function fetchQuestions() {
@@ -103,7 +103,7 @@
 
         // Start the timer for each question
         function startTimer() {
-            timeRemaining = 20;
+            timeRemaining = 30;
             updateTimerDisplay();
             timer = setInterval(() => {
                 timeRemaining--;
@@ -113,7 +113,7 @@
                     clearInterval(timer);
                     gameOver();
                 }
-            }, 1000); // Decrement the timer every 1 second
+            }, 1500); // Decrement the timer every 1 second
         }
 
         // Update the timer display
@@ -213,6 +213,7 @@
 
         // Show level completion popup
         function showLevelPopup(message) {
+            clearInterval(timer); // Stop the timer
             const popup = document.getElementById('popup');
             popup.innerText = message;
             popup.className = 'popup level';
@@ -225,6 +226,7 @@
 
         // End the quiz and save the high score
         function endQuiz() {
+            clearInterval(timer); // Stop the timer
             saveHighScore(score);
             document.getElementById('questionContainer').innerHTML = `
                 <h2>Quiz Over!</h2>
@@ -237,6 +239,7 @@
 
         // Handle game over due to time running out
         function gameOver() {
+            clearInterval(timer); // Stop the timer
             document.getElementById('questionContainer').innerHTML = `
                 <h2>Game Over!</h2>
                 <p>Your time ran out.</p>
@@ -270,37 +273,25 @@
             });
         }
 
-        // Function to end the quiz and save the high score
-    function endQuiz() {
-        saveHighScore(score);
-        document.getElementById('questionContainer').innerHTML = `
-            <h2>Quiz Over!</h2>
-            <p>Your score: ${score}</p>
-            ${score === 300 ? '<p>Congratulations! You have completed the quiz!</p>' : ''}
-            <button onclick="window.location.reload()">Play Again</button>
-            <button onclick="quitQuiz()">Quit</button>
-        `;
-    }
-
-    function updateHighScore(newHighscore) {
-        $.ajax({
-            type: 'POST',
-            url: '/update_highscore',
-            contentType: 'application/json',
-            data: JSON.stringify({ highscore: newHighscore }),
-            success: function(response) {
-                if (response.success) {
-                    console.log('High score updated successfully:', response);
-                    // Optionally, you can handle UI updates here
-                } else {
-                    console.error('Failed to update high score:', response.message);
+        function updateHighScore(newHighscore) {
+            $.ajax({
+                type: 'POST',
+                url: '/update_highscore',
+                contentType: 'application/json',
+                data: JSON.stringify({ highscore: newHighscore }),
+                success: function(response) {
+                    if (response.success) {
+                        console.log('High score updated successfully:', response);
+                        // Optionally, you can handle UI updates here
+                    } else {
+                        console.error('Failed to update high score:', response.message);
+                    }
+                },
+                error: function(error) {
+                    console.error('Error updating high score:', error);
                 }
-            },
-            error: function(error) {
-                console.error('Error updating high score:', error);
-            }
-        });
-    }
+            });
+        }
 
         // Fetch questions and set up the quiz on window load
         window.onload = function() {

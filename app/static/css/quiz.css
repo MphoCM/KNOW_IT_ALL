@@ -48,23 +48,62 @@
 }
 
 .timer {
-    padding: 5px;
-    
+    border: 2px solid red;
+    padding: 5px;    
 
 }
 
 .score {
+    font-weight: bold;
 
 }
 
 .que-container {
-
+    padding: 15px;
 }
 
 .popup {
-
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    display: none; /* Hidden by default */
+    z-index: 1000; /* Over other elements */
+    animation: fadeIn 0.5s;
+}
+/* Correct popUp style*/
+.popup.correct {
+    background-color: green;
+    color: var(--color-black);
 }
 
+/* incorrect popUp style*/
+.popup.incorrect {
+    background-color: var(--color-red);
+    color: var(--color-black);
+}
+
+/* Level transition popUp styling */
+.popup.level {
+    background-color: #2196f3;
+    color: white;
+}
+
+/* Animation for the fadeIn effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 
 
 .quiz-update-head {
